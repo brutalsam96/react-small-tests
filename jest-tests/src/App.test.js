@@ -7,6 +7,15 @@ describe("Feedback Form", () => {
     const comment = "The pizza crust was too thick";
     const handleSubmit = jest.fn();
     render(<FeedbackForm onSubmit={handleSubmit} />);
+
+    const scoreInput = screen.getByLabelText(/Score:/);
+    fireEvent.change(scoreInput, { target: {value: score} });
+
+    const commentsInput = screen.getByLabelText(/Comments:/);
+    fireEvent.change(commentsInput, { target: {value: comment} });
+
+    const submitButton = screen.getByRole("button");
+    fireEvent.click(submitButton);
     
     // You have to write the rest of the test below to make the assertion pass
 
@@ -18,10 +27,17 @@ describe("Feedback Form", () => {
 
   test("User is able to submit the form if the score is higher than 5, without additional feedback", () => {
     const score = "9";
+    
     const handleSubmit = jest.fn();
     render(<FeedbackForm onSubmit={handleSubmit} />);
 
     // You have to write the rest of the test below to make the assertion pass
+    const scoreInput = screen.getByLabelText(/Score:/);
+    fireEvent.change(scoreInput, { target: {value: score} });
+
+    const submitButton = screen.getByRole("button");
+    fireEvent.click(submitButton);
+
 
     expect(handleSubmit).toHaveBeenCalledWith({
       score,
